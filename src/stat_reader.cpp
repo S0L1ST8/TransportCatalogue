@@ -9,16 +9,13 @@
 
 using namespace std::literals;
 
-namespace transport_catalogue {
+namespace transport_catalogue::output {
 
-namespace output {
-
-void PrintRouteInfo(const std::tuple<int, int, double>& route_info) {
-    auto [stop_count, unique_stop_count, distance] = route_info;
-    std::cout << stop_count << " stops on route, "s
-              << unique_stop_count << " unique stops, "s
-              << std::setprecision(6) << distance << " route length"s
-              << std::endl;
+void PrintRouteInfo(const std::optional<RouteInfo>& route_info) {
+    std::cout << route_info.value().stop_count << " stops on route, "s
+              << route_info.value().unique_stop_count << " unique stops, "s
+              << std::setprecision(6) << route_info.value().distance << " route length, "s
+              << route_info.value().curvature << " curvature"s << std::endl;
 }
 
 void PrintBusesPassingThroughStop(const std::optional<std::vector<const Bus*>>& buses) {
@@ -41,7 +38,8 @@ void Requests(const TransportCatalogue& transport_catalogue) {
     int input_query_count = detail::ReadLineWithNumber();
 
     for (int i = 0; i < input_query_count; ++i) {
-        std::string request_type, name;
+        std::string request_type;
+        std::string name;
         std::cin >> request_type;
         std::cin >> std::ws;
         std::getline(std::cin, name);
@@ -50,7 +48,7 @@ void Requests(const TransportCatalogue& transport_catalogue) {
             const auto route_info = transport_catalogue.GetBusInfo(name);
             std::cout << "Bus "s << name << ": "s;
             if (route_info) {
-                PrintRouteInfo(std::move(route_info.value()));
+                PrintRouteInfo(route_info.value());
             }
             else {
                 std::cout << "not found"s << std::endl;
@@ -60,7 +58,7 @@ void Requests(const TransportCatalogue& transport_catalogue) {
             std::cout << "Stop "s << name << ": "s;
             const auto buses = transport_catalogue.GetBusesPassingThroughStop(name);
             if (buses) {
-                PrintBusesPassingThroughStop(std::move(buses.value()));
+                PrintBusesPassingThroughStop(buses.value());
             }
             else {
                 std::cout << "not found"s;
@@ -70,6 +68,4 @@ void Requests(const TransportCatalogue& transport_catalogue) {
     }
 }
 
-} // namespace output
-
-} // namespace transport_catalogue
+} // namespace transport_catalogue::output

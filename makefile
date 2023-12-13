@@ -1,6 +1,6 @@
 TARGET = transport_catalogue.exe
 CC = g++
-FLAGS = -std=c++17 -Wall -Werror -O3 -g
+FLAGS = -std=c++17 -D_GLIBCXX_DEBUG -fsanitize=undefined -Wall -Werror -O3 -g
 
 PREF_SRC = ./src/
 PREF_OBJ = ./obj/

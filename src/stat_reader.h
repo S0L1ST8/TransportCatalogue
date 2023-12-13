@@ -5,17 +5,12 @@
 #include <set>
 #include <tuple>
 
-namespace transport_catalogue {
+namespace transport_catalogue::output {
 
-namespace output {
+void PrintRouteInfo(const std::optional<RouteInfo>& route_info);
 
-void PrintRouteInfo(const std::tuple<int, int, double> &route_info);
-
-void PrintBusesPassingThroughStop(
-    const std::optional<std::vector<const Bus*>> &buses);
+void PrintBusesPassingThroughStop(std::optional<std::vector<const Bus*>>& buses);
 
 void Requests(const TransportCatalogue& transport_catalogue);
 
-} // namesoace output
-
-} // namespace transport_catalogue
+} // namespace transport_catalogue::output

@@ -4,9 +4,7 @@
 
 static const double dr = 3.1415926535 / 180.;
 
-namespace transport_catalogue {
-
-namespace geo {
+namespace transport_catalogue::geo {
 
 struct Coordinates {
     double lat;
@@ -28,6 +26,4 @@ inline double ComputeDistance(Coordinates from, Coordinates to) {
         * cos(to.lat * dr) * cos(std::abs(from.lng - to.lng) * dr)) * 6371000;
 }
 
-} // namespace geo
-
-} // namespace transport_catalogue
+} // namespace transport_catalogue::geo
